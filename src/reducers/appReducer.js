@@ -1,6 +1,7 @@
-import { FILL_SQUARE, LOAD_STATE } from "../actions/actions";
+import { FILL_SQUARE, LOAD_STATE, NEW_GAME } from "../actions/actions";
 import { PLAYER_X, PLAYER_O } from "../utilities/enums";
 import checkForWin from "../components/App/checkForWin";
+import { initialState } from "../data/data";
 
 export default function appReducer(incomingState, { type, payload }) {
   switch (type) {
@@ -13,6 +14,7 @@ export default function appReducer(incomingState, { type, payload }) {
       const newSquares = [...incomingState.squares];
       const moveIsValid = incomingState.squares[index] === null;
       let nextPlayer = currentPlayer;
+      let newStats = incomingState.stats;
       let theGameIsOver = false;
 
       if (moveIsValid) {
@@ -24,15 +26,23 @@ export default function appReducer(incomingState, { type, payload }) {
         } else {
           nextPlayer = PLAYER_X;
         }
+
         theGameIsOver = checkForWin(newSquares, index);
-        console.log("win:", theGameIsOver);
-        // TO-DO: HANDLE WHAT HAPPENS IF PLAYER WINS
+
+        if (theGameIsOver) {
+          newStats[currentPlayer].wins++;
+          newStats[nextPlayer].losses++;
+        }
       }
       return {
         currentPlayer: nextPlayer,
         squares: newSquares,
-        currentGameIsOver: theGameIsOver
+        currentGameIsOver: theGameIsOver,
+        stats: newStats
       };
+    }
+    case NEW_GAME: {
+      return { ...initialState, stats: incomingState.stats};
     }
     default: {
       return incomingState;

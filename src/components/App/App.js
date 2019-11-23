@@ -9,23 +9,25 @@ import { initialState } from "../../data/data";
 import { PLAYER_X, PLAYER_O } from "../../utilities/enums";
 import { LOAD_STATE } from "../../actions/actions";
 import useEffectOnce from "../../utilities/useEffectOnce";
+import { writeStateToStorage } from "../../utilities/utilities";
 
 export const Dispatch = React.createContext();
 export const State = React.createContext();
 
 function App() {
+  // Initialize state
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  // Restore state from LocalStorage
+  // Load state from LocalStorage
   useEffectOnce(() => {
-    const rawData = localStorage.getItem('ticTacToeState');
+    const rawData = localStorage.getItem("ticTacToeState");
     rawData && dispatch({ type: LOAD_STATE, payload: JSON.parse(rawData) });
   });
 
-  // Save changes to LocalStorage
+  // Save state changes to LocalStorage
   useEffect(() => {
-    localStorage.setItem('ticTacToeState', JSON.stringify(state));
-  }, [ state ]);
+    writeStateToStorage(state);
+  }, [state]);
 
   return (
     <Dispatch.Provider value={dispatch}>
@@ -33,9 +35,9 @@ function App() {
         <div className="App">
           <Header />
           <div className="game-body">
-            <PlayerPanel player={PLAYER_X}/>
+            <PlayerPanel player={PLAYER_X} stats={state.stats.PLAYER_X} />
             <Board squares={state.squares} />
-            <PlayerPanel player={PLAYER_O}/>
+            <PlayerPanel player={PLAYER_O} stats={state.stats.PLAYER_O} />
           </div>
           <Footer />
         </div>
