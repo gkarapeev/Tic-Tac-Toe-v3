@@ -8,15 +8,15 @@ import appReducer from "../../reducers/appReducer";
 import { initialState } from "../../data/data";
 import { PLAYER_X, PLAYER_O } from '../../utilities/enums';
 
-export const Context = React.createContext();
-export const CurrentPlayer = React.createContext();
+export const Dispatch = React.createContext();
+export const State = React.createContext();
 
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   return (
-    <Context.Provider value={dispatch}>
-      <CurrentPlayer.Provider value={state.currentPlayer}>
+    <Dispatch.Provider value={dispatch}>
+      <State.Provider value={state}>
         <div className="App">
           <Header />
           <div className="game-body">
@@ -26,8 +26,8 @@ function App() {
           </div>
           <Footer />
         </div>
-      </CurrentPlayer.Provider>
-    </Context.Provider>
+      </State.Provider>
+    </Dispatch.Provider>
   );
 }
 

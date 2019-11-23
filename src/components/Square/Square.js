@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
 import "./Square.css";
-import { Context, CurrentPlayer } from "../App/App";
+import { Dispatch, State } from "../App/App";
 import { FILL_SQUARE } from "../../actions/actions";
 
 function Square({ index, sign }) {
-  const dispatch = useContext(Context);
-  const currentPlayer = useContext(CurrentPlayer);
+  const dispatch = useContext(Dispatch);
+  const state = useContext(State);
   const fillSquare = () => {
     dispatch({
       type: FILL_SQUARE,
-      payload: { squareIndex: index, player: currentPlayer }
+      payload: { squareIndex: index, player: state.currentPlayer }
     });
   };
   return (
-    <div className="Square" onClick={fillSquare}>
+    <div className="Square" onClick={state.currentGameIsOver ? null : fillSquare}>
       <span>{sign}</span>
     </div>
   );
