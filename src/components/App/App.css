@@ -1,0 +1,13 @@
+.App {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: rgb(219, 219, 219);
+  transform: translate(-50%, -50%);
+}
+
+.game-body {
+  width: 800px;
+  height: 400px;
+  display: flex;
+}

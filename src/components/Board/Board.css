@@ -1,0 +1,8 @@
+.Board {
+    background-color: rgb(207, 233, 219);
+    flex: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    cursor: pointer;
+}
