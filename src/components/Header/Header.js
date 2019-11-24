@@ -9,11 +9,12 @@ function Header() {
   const dispatch = useContext(Dispatch)
   const previousPlayer = state.currentPlayer === PLAYER_X ? "O" : "X";
   const currentPlayer = state.currentPlayer === PLAYER_X ? "X" : "O";
+  const gameIsDraw = state.currentStep >= 9;
   let message;
 
   if (state.currentGameIsOver) {
     message = `Player ${previousPlayer} won the game!`;
-  } else if (state.currentStep >= 9) {
+  } else if (gameIsDraw) {
     message = "It's a draw!"
   }
   else {
@@ -22,7 +23,7 @@ function Header() {
   return (
     <div className="Header">
       {message}
-      {state.currentGameIsOver ? <button onClick={() => dispatch({ type: NEW_GAME })}>New Game</button> : null}
+      {state.currentGameIsOver || gameIsDraw ? <button onClick={() => dispatch({ type: NEW_GAME })}>New Game</button> : null}
     </div>
   );
 }

@@ -13,7 +13,7 @@ const diagonal_1 = [0, 4, 8];
 const diagonal_2 = [2, 4, 6];
 
 export default function checkForWin(squares, i) {
-  const allSame = vals => vals[0] === vals[1] && vals[0] === vals[2];
+  const allSame = vals => vals[0] === vals[1] && vals[0] === vals[2] && vals[0] !== null;
 
   const testAll = combinations => {
     let victory = false;
@@ -58,6 +58,6 @@ export default function checkForWin(squares, i) {
       return testAll([row_3, col_3, diagonal_1]);
     }
     default:
-      break;
+      return testAll([row_1, row_2, row_3, col_1, col_2, col_3, diagonal_1, diagonal_2]);
   }
 }

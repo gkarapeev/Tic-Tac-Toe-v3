@@ -38,8 +38,9 @@ export default function appReducer(incomingState, { type, payload }) {
         stepNumber++;
         // Throw away any future moves from the stack because they're no longer relevant
         newHistory = newHistory.slice(0, stepNumber);
+        // Add the new move to the history
         newHistory = newHistory.concat([newSquares]);
-
+        // Check for a victory
         theGameIsOver = checkForWin(newSquares, index);
 
         if (theGameIsOver) {
@@ -84,11 +85,16 @@ export default function appReducer(incomingState, { type, payload }) {
 
       const nextPlayer =
         incomingState.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+
+      // Check for a victory
+      const theGameIsOver = checkForWin(hist[nextStep]);
+
       return {
         ...incomingState,
         currentStep: nextStep,
         currentPlayer: nextPlayer,
-        squares: hist[nextStep]
+        squares: hist[nextStep],
+        currentGameIsOver: theGameIsOver
       };
     }
     case NEW_GAME: {
