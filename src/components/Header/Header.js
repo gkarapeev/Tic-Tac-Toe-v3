@@ -13,7 +13,10 @@ function Header() {
 
   if (state.currentGameIsOver) {
     message = `Player ${previousPlayer} won the game!`;
-  } else {
+  } else if (state.currentStep >= 9) {
+    message = "It's a draw!"
+  }
+  else {
     message = `It's ${currentPlayer}'s turn`;
   }
   return (

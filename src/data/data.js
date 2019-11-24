@@ -1,20 +1,21 @@
-import { nullArrayOfLength } from '../utilities/utilities';
-import { PLAYER_X } from '../utilities/enums';
+import { PLAYER_X } from "../utilities/enums";
 
 export const initialStats = {
-    PLAYER_X: {
-        wins: 0,
-        losses: 0
-    },
-    PLAYER_O: {
-        wins: 0,
-        losses: 0
-    }
-}
+  PLAYER_X: {
+    wins: 0,
+    losses: 0
+  },
+  PLAYER_O: {
+    wins: 0,
+    losses: 0
+  }
+};
 
 export const initialState = {
-  squares: nullArrayOfLength(9),
+  squares: Array(9).fill(null),
   currentPlayer: PLAYER_X,
+  currentGameHistory: [Array(9).fill(null)],
+  currentStep: 0,
   currentGameIsOver: false,
   stats: initialStats
 };

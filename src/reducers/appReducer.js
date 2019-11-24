@@ -1,4 +1,10 @@
-import { FILL_SQUARE, LOAD_STATE, NEW_GAME } from "../actions/actions";
+import {
+  FILL_SQUARE,
+  LOAD_STATE,
+  NEW_GAME,
+  UNDO_TURN,
+  REDO_TURN
+} from "../actions/actions";
 import { PLAYER_X, PLAYER_O } from "../utilities/enums";
 import checkForWin from "../components/App/checkForWin";
 import { initialState } from "../data/data";
@@ -16,6 +22,8 @@ export default function appReducer(incomingState, { type, payload }) {
       let nextPlayer = currentPlayer;
       let newStats = incomingState.stats;
       let theGameIsOver = false;
+      let stepNumber = incomingState.currentStep;
+      let newHistory = incomingState.currentGameHistory;
 
       if (moveIsValid) {
         // Fill the correct sign in the correct square
@@ -26,6 +34,11 @@ export default function appReducer(incomingState, { type, payload }) {
         } else {
           nextPlayer = PLAYER_X;
         }
+        // Increment the step number
+        stepNumber++;
+        // Throw away any future moves from the stack because they're no longer relevant
+        newHistory = newHistory.slice(0, stepNumber);
+        newHistory = newHistory.concat([newSquares]);
 
         theGameIsOver = checkForWin(newSquares, index);
 
@@ -37,12 +50,49 @@ export default function appReducer(incomingState, { type, payload }) {
       return {
         currentPlayer: nextPlayer,
         squares: newSquares,
+        currentGameHistory: moveIsValid
+          ? newHistory
+          : incomingState.currentGameHistory,
+        currentStep: stepNumber,
         currentGameIsOver: theGameIsOver,
         stats: newStats
       };
     }
+    case UNDO_TURN: {
+      const hist = incomingState.currentGameHistory;
+      const prevStep = incomingState.currentStep - 1;
+      if (prevStep < 0) {
+        return incomingState;
+      }
+      const prevPlayer =
+        incomingState.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+      return {
+        ...incomingState,
+        currentStep: prevStep,
+        squares: hist[prevStep],
+        currentPlayer: prevPlayer,
+        currentGameIsOver: false
+      };
+    }
+    case REDO_TURN: {
+      const hist = incomingState.currentGameHistory;
+      const nextStep = incomingState.currentStep + 1;
+
+      if (nextStep >= hist.length) {
+        return incomingState;
+      }
+
+      const nextPlayer =
+        incomingState.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+      return {
+        ...incomingState,
+        currentStep: nextStep,
+        currentPlayer: nextPlayer,
+        squares: hist[nextStep]
+      };
+    }
     case NEW_GAME: {
-      return { ...initialState, stats: incomingState.stats};
+      return { ...initialState, stats: incomingState.stats };
     }
     default: {
       return incomingState;
