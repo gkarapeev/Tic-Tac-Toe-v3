@@ -10,11 +10,12 @@
   border-radius: 10px 10px 0 0;
 }
 
-.Header Button {
+.Header button {
   position: absolute;
   right: 20px;
 }
 
 .current-sign {
-    color: rgb(59,206,76);
+  color: rgb(59, 206, 76);
+  padding-top: 3px;
 }

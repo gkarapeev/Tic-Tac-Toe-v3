@@ -31,4 +31,9 @@ export const Input = styled.input`
   border: none;
   background-color: aliceblue;
   text-align: center;
+  &:hover,
+  &:focus {
+    background-color: #e1fff3;
+    box-shadow: inset 0 0 3px 3px #84e7bf;
+  }
 `;

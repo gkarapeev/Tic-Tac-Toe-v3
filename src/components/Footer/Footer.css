@@ -11,3 +11,39 @@
 button:nth-child(2) {
   margin-left: 14px;
 }
+
+.nav-arrow {
+  fill: #909090;
+  width: 15px;
+  height: 15px;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(1px);
+  }
+
+  75% {
+    transform: translateX(-1px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+Button:hover svg {
+  transition: all 0.3s;
+  fill: rgb(71, 127, 93);
+  cursor: pointer;
+  animation: bounce 1.5s infinite;
+}
+
+#nav-arrow-path-left {
+  transform-origin: center center;
+  transform: rotate(180deg);
+}
