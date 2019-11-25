@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./PlayerPanel.css";
 import { State, Dispatch } from "../App/App";
-import { PLAYER_X } from "../../utilities/enums";
+import { PLAYER_X, CHANGE_NAME } from "../../utilities/enums";
 import { Input } from "../StyledComponents/StyledComponents";
 
 
@@ -10,7 +10,7 @@ function PlayerPanel({ player }) {
   const playerNameKey = player === PLAYER_X ? "playerXName" : "playerOName";
   const {
     stats: {
-      PLAYER_X: { wins, losses }
+      [player]: { wins, losses }
     },
     [playerNameKey]: playerName
   } = useContext(State);
@@ -22,7 +22,7 @@ function PlayerPanel({ player }) {
           value={playerName}
           onChange={e =>
             dispatch({
-              type: "CHANGE_NAME",
+              type: CHANGE_NAME,
               payload: { player: player, newName: e.target.value }
             })
           }
