@@ -13,7 +13,7 @@ function Square({ index, sign }) {
     });
   };
   return (
-    <div className="Square" onClick={state.currentGameIsOver ? null : fillSquare}>
+    <div className={sign ? "Square" : state.currentGameIsOver ? "Square" : "Square valid"} onClick={state.currentGameIsOver ? null : fillSquare}>
       <span>{sign}</span>
     </div>
   );

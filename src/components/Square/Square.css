@@ -9,6 +9,10 @@
   font-family: "Comic Sans Ms";
 }
 
+.Square.valid:hover {
+    background-color: white;
+}
+
 .Square span {
   pointer-events: none;
   user-select: none;
