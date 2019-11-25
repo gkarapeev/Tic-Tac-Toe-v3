@@ -26,7 +26,7 @@ function Header() {
   return (
     <div className="Header">
       <span className="game-message">{message} &nbsp;</span>
-      {state.currentGameIsOver ? null : (
+      {state.currentGameIsOver || gameIsDraw ? null : (
         <span className="current-sign">{currentSign}</span>
       )}
       {state.currentGameIsOver || gameIsDraw ? (
