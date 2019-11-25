@@ -5,9 +5,10 @@ import {
   UNDO_TURN,
   REDO_TURN
 } from "../actions/actions";
-import { PLAYER_X, PLAYER_O } from "../utilities/enums";
+import { PLAYER_X, PLAYER_O, CHANGE_NAME } from "../utilities/enums";
 import checkForWin from "../components/App/checkForWin";
 import { initialState } from "../data/data";
+import cloneDeep from "lodash.clonedeep";
 
 export default function appReducer(incomingState, { type, payload }) {
   switch (type) {
@@ -17,7 +18,7 @@ export default function appReducer(incomingState, { type, payload }) {
     case FILL_SQUARE: {
       const index = payload.squareIndex;
       const currentPlayer = payload.player;
-      const newSquares = [...incomingState.squares];
+      const newSquares = cloneDeep(incomingState.squares);
       const moveIsValid = incomingState.squares[index] === null;
       let nextPlayer = currentPlayer;
       let newStats = incomingState.stats;
@@ -49,6 +50,7 @@ export default function appReducer(incomingState, { type, payload }) {
         }
       }
       return {
+        ...incomingState,
         currentPlayer: nextPlayer,
         squares: newSquares,
         currentGameHistory: moveIsValid
@@ -62,16 +64,28 @@ export default function appReducer(incomingState, { type, payload }) {
     case UNDO_TURN: {
       const hist = incomingState.currentGameHistory;
       const prevStep = incomingState.currentStep - 1;
+      const prevPlayer =
+        incomingState.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+
+      // Disable undoing after reaching the game start
       if (prevStep < 0) {
         return incomingState;
       }
-      const prevPlayer =
-        incomingState.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+
+      // Undo the stats if we're undoing a winning turn
+      const lastTurnWasAVictory = checkForWin(hist[incomingState.currentStep]);
+      let newStats = cloneDeep(incomingState.stats);
+      if (lastTurnWasAVictory) {
+        newStats[prevPlayer].wins--;
+        newStats[incomingState.currentPlayer].losses--;
+      }
+
       return {
         ...incomingState,
         currentStep: prevStep,
         squares: hist[prevStep],
         currentPlayer: prevPlayer,
+        stats: newStats,
         currentGameIsOver: false
       };
     }
@@ -89,16 +103,37 @@ export default function appReducer(incomingState, { type, payload }) {
       // Check for a victory
       const theGameIsOver = checkForWin(hist[nextStep]);
 
+      // Update the stats
+      let newStats = cloneDeep(incomingState.stats);
+      if (theGameIsOver) {
+        newStats[incomingState.currentPlayer].wins++;
+        newStats[nextPlayer].losses++;
+      }
+
       return {
         ...incomingState,
         currentStep: nextStep,
         currentPlayer: nextPlayer,
         squares: hist[nextStep],
+        stats: newStats,
         currentGameIsOver: theGameIsOver
       };
     }
     case NEW_GAME: {
-      return { ...initialState, stats: incomingState.stats };
+      return {
+        ...initialState,
+        stats: incomingState.stats,
+        playerXName: incomingState.playerXName,
+        playerOName: incomingState.playerOName
+      };
+    }
+    case CHANGE_NAME: {
+      const playerNameKey =
+        payload.player === PLAYER_X ? "playerXName" : "playerOName";
+      return {
+        ...incomingState,
+        [playerNameKey]: payload.newName
+      };
     }
     default: {
       return incomingState;

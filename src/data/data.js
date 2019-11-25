@@ -14,6 +14,8 @@ export const initialStats = {
 export const initialState = {
   squares: Array(9).fill(null),
   currentPlayer: PLAYER_X,
+  playerXName: "Player 1",
+  playerOName: "Player 2",
   currentGameHistory: [Array(9).fill(null)],
   currentStep: 0,
   currentGameIsOver: false,

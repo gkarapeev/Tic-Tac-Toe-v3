@@ -1,15 +1,23 @@
 .PlayerPanel {
-    margin-top: 30px;
-    flex: 1;
-    text-align: center;
+  padding-top: 30px;
+  text-align: center;
+  flex: 1;
 }
 
 .PlayerPanel > div {
-    height: 50px;
-    padding: 10px;
+  margin: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
 }
 
-.player-name {
-    font-size: 20px;
-    font-weight: 800;
+.PlayerPanel > div:nth-child(n + 2) {
+  height: 35px;
+  background-color: rgb(71, 127, 93);
+  color: white;
+}
+
+.stat-number {
+  font-weight: 900;
 }

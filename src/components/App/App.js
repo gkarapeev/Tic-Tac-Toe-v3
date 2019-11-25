@@ -35,9 +35,9 @@ function App() {
         <div className="App">
           <Header />
           <div className="game-body">
-            <PlayerPanel player={PLAYER_X} stats={state.stats.PLAYER_X} />
+            <PlayerPanel player={PLAYER_X} />
             <Board squares={state.squares} />
-            <PlayerPanel player={PLAYER_O} stats={state.stats.PLAYER_O} />
+            <PlayerPanel player={PLAYER_O} />
           </div>
           <Footer />
         </div>

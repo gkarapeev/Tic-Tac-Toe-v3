@@ -1,8 +1,24 @@
 .Board {
-    background-color: rgb(207, 233, 219);
-    flex: 2;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    cursor: pointer;
+  height: 390px;
+  width: 390px;
+  background-color: rgb(252, 255, 211);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 3px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.Board .Square:first-child {
+    border-top-left-radius: 10px;
+}
+.Board .Square:nth-child(3) {
+    border-top-right-radius: 10px;
+}
+.Board .Square:nth-child(7) {
+    border-bottom-left-radius: 10px;
+}
+.Board .Square:nth-child(9) {
+    border-bottom-right-radius: 10px;
 }

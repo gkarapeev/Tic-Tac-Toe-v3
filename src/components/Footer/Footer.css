@@ -1,8 +1,13 @@
 .Footer {
-    background-color: rgb(59, 59, 59);
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
+  background-color: rgb(59, 59, 59);
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 0 0 10px 10px;
+}
+
+button:nth-child(2) {
+  margin-left: 14px;
 }

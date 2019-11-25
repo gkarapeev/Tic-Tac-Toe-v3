@@ -2,12 +2,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: rgb(219, 219, 219);
   transform: translate(-50%, -50%);
+  background-color: rgb(90, 90, 90);
+  border-radius: 10px;
+  box-shadow: 19px 16px 24px 0px rgba(0, 0, 0, 0.43);
 }
 
 .game-body {
   width: 800px;
-  height: 400px;
   display: flex;
+  justify-content: center;
+  padding: 10px 0;
 }
