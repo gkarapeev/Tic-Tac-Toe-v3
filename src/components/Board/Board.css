@@ -6,7 +6,6 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 3px;
-  cursor: pointer;
   border-radius: 10px;
 }
 

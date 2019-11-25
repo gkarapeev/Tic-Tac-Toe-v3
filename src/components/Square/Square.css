@@ -11,6 +11,7 @@
 
 .Square.valid:hover {
     background-color: white;
+    cursor: pointer;
 }
 
 .Square span {
